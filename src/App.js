@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <button className='button' onClick={handleTaskChangeButton}>Сменить задание</button>
-      {!taskNumber ? (<Component1/> ) : (<Component2/>)}
+      {!taskNumber ? (<Component1/>) : (<Component2/>)}
     </>
   );
 };
