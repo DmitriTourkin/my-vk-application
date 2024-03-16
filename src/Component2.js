@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function Component2() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('Jackie');
   const guessNameRef = useRef('');
   const [isTyping, setIsTyping] = useState(false);
   const [cachedResponses, setCachedResponses] = useState({});
@@ -25,6 +25,7 @@ export default function Component2() {
     timer = setTimeout(() => {
       setIsTyping(false);
       if (!cachedResponses[name]) {
+        setName(e.target.value);
         guessAgeByName();
       } else {
         guessNameRef.current.textContent = cachedResponses[name];
@@ -42,10 +43,11 @@ export default function Component2() {
   };
 
   const guessAgeByName = async () => {
-    if (!isTyping) {
-      console.log('Пользователь закончил ввод');
-      const url = 'https://api.agify.io/?name=' + name;
-      try {
+    try {
+      if (!isTyping) {
+        console.log('Пользователь закончил ввод');
+        const url = 'https://api.agify.io?name=' + name;
+      
         const response = await fetch(url, { signal });
         if (response.ok) {
           const data = await response.json();
@@ -55,10 +57,10 @@ export default function Component2() {
         } else {
           throw new Error('Ошибка HTTP: ' + response.status);
         }
-      } catch (error) {
-        guessNameRef.current.textContent = 'Не получилось найти';
-        console.error(error);
       }
+    } catch (error) {
+      guessNameRef.current.textContent = 'Не получилось найти';
+      console.error(error);
     }
   }
 
@@ -74,4 +76,5 @@ export default function Component2() {
     </div>
   );
 }
+
 
