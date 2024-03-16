@@ -4,12 +4,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const schema = yup.object({
-  name: yup.string().required()
+  name: yup.string().matches(/^[a-zA-Z]+$/, 'Имя должно содержать только буквы')
+    .min(1, 'Имя должно состоять как минимум из одного символа')
+    .required('Поле обязательно к заполнению')
 }).required();
 
 export default function Component2() {
   const { register, handleSubmit, formState:{ errors } } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema), mode: 'onBlur'
   });
 
   const [name, setName] = useState('');
@@ -43,10 +45,12 @@ export default function Component2() {
 
   const handleFormButton = (e) => {
     e.preventDefault();
-    if (cachedResponses[name] === undefined) {
-      guessAgeByName();
-    } else {
-      guessNameRef.current.textContent = cachedResponses[name];
+    if (!errors.name) {
+      if (cachedResponses[name] === undefined) {
+        guessAgeByName();
+      } else {
+        guessNameRef.current.textContent = cachedResponses[name];
+      }
     }
   };
 
@@ -54,6 +58,9 @@ export default function Component2() {
     const url = 'https://api.agify.io/?name=' + name;
     try {
       const response = await fetch(url, { signal }, {method: 'GET'});
+      if (signal.aborted) { //Пропуск обработки ответа, если запрос был прерван
+        return; 
+      }
       if (response.ok) {
         const data = await response.json();
         const age = data.age;
@@ -71,9 +78,12 @@ export default function Component2() {
   return (
     <div>
       <h1>Привет, а вот и форма!</h1>
-      <form className='form'>
+      <form className='form' onSubmit={handleSubmit(handleFormButton)}>
         <label>Имя</label>
-        <input className='form-input' name='name' value={name} placeholder='Введите имя' onChange={(e) => setName(e.target.value)}></input>
+        <input 
+        {...register("name")}
+            className='form-input' name='name' value={name} placeholder='Введите имя' onChange={(e) => setName(e.target.value)}></input>
+        {errors?.name && <p>{errors?.name?.message}</p>}
         <p ref={guessNameRef} className='guessed-name'></p>
         <button type='submit' className='button' onClick={handleFormButton}>Отправить</button>
       </form>
