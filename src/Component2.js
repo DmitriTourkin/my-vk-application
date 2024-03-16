@@ -1,13 +1,22 @@
-import { useState, useEffect, useRef, createFactory } from 'react';
-import { useForm } from 'react-hook-form';
-
-import './App.css';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Component2() {
   const [name, setName] = useState('');
   const guessNameRef = useRef('');
   const [isTyping, setIsTyping] = useState(false);
+  const [cachedResponses, setCachedResponses] = useState({});
+
   let timer;
+  let controller = new AbortController();
+  let signal = controller.signal;
+
+  useEffect(() => {
+    return () => {
+      controller.abort();
+      controller = new AbortController();
+      signal = controller.signal;
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     setName(e.target.value);
@@ -15,14 +24,21 @@ export default function Component2() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       setIsTyping(false);
-      setName(e.target.value);
-      guessAgeByName();
+      if (!cachedResponses[name]) {
+        guessAgeByName();
+      } else {
+        guessNameRef.current.textContent = cachedResponses[name];
+      }
     }, 3000);
   };
 
   const handleFormButton = (e) => {
     e.preventDefault();
-    guessAgeByName();
+    if (!cachedResponses[name]) {
+      guessAgeByName();
+    } else {
+      guessNameRef.current.textContent = cachedResponses[name];
+    }
   };
 
   const guessAgeByName = async () => {
@@ -30,11 +46,12 @@ export default function Component2() {
       console.log('Пользователь закончил ввод');
       const url = 'https://api.agify.io/?name=' + name;
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, { signal });
         if (response.ok) {
           const data = await response.json();
           const age = data.age;
           guessNameRef.current.textContent = age.toString();
+          setCachedResponses((prevResponses) => ({ ...prevResponses, [name]: age.toString() }));
         } else {
           throw new Error('Ошибка HTTP: ' + response.status);
         }
@@ -57,3 +74,4 @@ export default function Component2() {
     </div>
   );
 }
+
