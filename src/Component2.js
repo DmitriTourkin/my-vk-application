@@ -31,8 +31,11 @@ export default function Component2() {
   useEffect(() => {
     if (name.trim() !== '') {
       timer = setTimeout(() => {
-        guessAgeByName();
-        console.log('в useEffect вызов функции')
+        if (cachedResponses[name] === undefined) { 
+          guessAgeByName();
+        } else {
+          guessNameRef.current.textContent = cachedResponses[name];
+        }
       }, 3000);
     }
     return () => clearTimeout(timer);
@@ -40,7 +43,7 @@ export default function Component2() {
 
   const handleFormButton = (e) => {
     e.preventDefault();
-    if (!cachedResponses[name]) {
+    if (cachedResponses[name] === undefined) {
       guessAgeByName();
     } else {
       guessNameRef.current.textContent = cachedResponses[name];
@@ -60,7 +63,7 @@ export default function Component2() {
         throw new Error('Ошибка HTTP: ' + response.status);
       }
     } catch (error) {
-      guessNameRef.current.textContent = 'Не получилось найти. Проблема связи с сервером';
+      guessNameRef.current.textContent = 'Не получилось найти. Кажется проблема связи с сервером';
       console.error(error);
     }
   }
@@ -71,7 +74,6 @@ export default function Component2() {
       <form className='form'>
         <label>Имя</label>
         <input className='form-input' name='name' value={name} placeholder='Введите имя' onChange={(e) => setName(e.target.value)}></input>
-        <p className='error-message'>{errors.firstName?.message}</p>
         <p ref={guessNameRef} className='guessed-name'></p>
         <button type='submit' className='button' onClick={handleFormButton}>Отправить</button>
       </form>
