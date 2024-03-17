@@ -41,6 +41,8 @@ const VKFactsComponent = () => {
             stretched={true}
             className="button"
             loading={isLoading} 
+            rounded={true}
+            size={'m'}
             onClick={handleButtonClick}>Получить факт
           </Button>
         </FormItem>
