@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef, createFactory } from 'react';
 import './App.css';
-import Component1 from './Component1';
-import Component2 from './Component2';
+import Component1 from '../components/FactsComponentsClassic';
+import Component2 from '../forms/GuessAgeFormClassic';
+import FactsComponentClassic from '../components/FactsComponentsClassic';
+import FormGuessAgeClassic from '../forms/GuessAgeFormClassic';
 
 function App() {
   const [taskNumber, setTaskNumber] = useState(0);
@@ -13,7 +15,7 @@ function App() {
   return (
     <>
       <button className='button' onClick={handleTaskChangeButton}>Сменить задание</button>
-      {!taskNumber ? (<Component1/>) : (<Component2/>)}
+      {!taskNumber ? (<FactsComponentClassic/>) : (<FormGuessAgeClassic/>)}
     </>
   );
 };

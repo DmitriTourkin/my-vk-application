@@ -9,7 +9,7 @@ const schema = yup.object({
     .required('Поле обязательно к заполнению')
 }).required();
 
-export default function Component2() {
+const FormGuessAgeClassic = ()=> {
   const { register, handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schema), mode: 'onBlur'
   });
@@ -90,3 +90,5 @@ export default function Component2() {
     </div>
   );
 }
+
+export default FormGuessAgeClassic;

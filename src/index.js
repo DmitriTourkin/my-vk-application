@@ -5,8 +5,7 @@ import {
   ConfigProvider,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import AppVK from './AppVK'
-import App from './App';
+import AppVK from './app_versions/AppVK'
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import './App.css';
+import '../app_versions/app-styles/App.css';
+import '@vkontakte/vkui/dist/vkui.css';
 
 
-export default function Component1() {
+const FactsComponentClassic = () => {
   const [fact, setFact] = useState({});
   const textareaRef = useRef(null);
 
@@ -27,5 +28,6 @@ export default function Component1() {
       <button className='button' onClick={handleButtonClick}>Получить факт</button>
     </div>
   )
-
 }
+
+export default FactsComponentClassic;
