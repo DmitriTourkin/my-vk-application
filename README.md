@@ -13,7 +13,11 @@
 2. Открыть терминал. 
 3. Установить новую версию NodeJS `nvm install 20.5.0`
 4. Начать использовать новую версию NodeJS `nvm use 20.5.0`
-5. Проверить версию npm
+5. Попробуйте npm install
+6. Если возникла ошибка `must provide string spec (npm ERR!)`, а версии NodeJS и NPM -- необходимо 
+7. **Переустановка зависимостей проекта**: удалить папку node_modules и файл package-lock.json, а затем установить зависимости заново:
+   используя команду `rm -rf node_modules package-lock.json npm install`
+
 
 
 
