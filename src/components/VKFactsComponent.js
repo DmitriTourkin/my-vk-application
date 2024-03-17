@@ -9,12 +9,20 @@ const VKFactsComponent = () => {
   const textareaRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
 
+  const errorRef = useRef(null);
+
   const handleButtonClick = async () => {    
     let url = 'https://catfact.ninja/fact';
     setLoading(true);
-    const result = await fetch(url).then(data => data.json());
-    setFact(result);
-    setLoading(false);
+    try {
+      let result = await fetch(url).then(data => data.json());
+      errorRef.current.textContent = ''
+      setFact(result)
+      setLoading(false);
+    } catch {
+      errorRef.current.textContent = 'Проблема подключения к серверу.'
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -45,6 +53,7 @@ const VKFactsComponent = () => {
             size={'m'}
             onClick={handleButtonClick}>Получить факт
           </Button>
+          <p ref={errorRef}></p>
         </FormItem>
       </Div>
   );
