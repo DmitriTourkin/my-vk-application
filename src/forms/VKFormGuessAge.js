@@ -105,7 +105,7 @@ const VKFormGuessAge= () => {
         
       } else {
         setIsLoading(false);
-        guessNameRef.current.textContent = `Упс! Какая-то ошибка связи с сервером. ${response.status} `;
+        guessNameRef.current.textContent = `Упс! Какая-то ошибка связи с сервером.`;
         throw new Error("Ошибка HTTP: " + response.status);
       }
     } catch (error) {
