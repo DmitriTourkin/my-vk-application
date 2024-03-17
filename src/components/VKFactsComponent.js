@@ -16,14 +16,14 @@ const VKFactsComponent = () => {
     setLoading(true);
     try {
       let result = await fetch(url).then(data => data.json());
-      errorRef.current.textContent = ''
-      setFact(result)
+      errorRef.current.textContent = '';
+      setFact(result);
       setLoading(false);
     } catch {
-      errorRef.current.textContent = 'Проблема подключения к серверу.'
+      errorRef.current.textContent = 'Проблема подключения к серверу.';
       setLoading(false);
-    }
-  }
+    };
+  };
 
   useEffect(() => {
     if (fact.fact) {
@@ -57,6 +57,6 @@ const VKFactsComponent = () => {
         </FormItem>
       </Div>
   );
-}
+};
 
 export default VKFactsComponent;
