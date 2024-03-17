@@ -137,17 +137,19 @@ const VKFormGuessAge= () => {
                 onChange={(e) => handleInputChange(e)}
               />
             </FormItem>
-            <Button 
+          </FormField>
+          <Button 
                 isLoading={isLoading} 
                 type="submit"
                 className="button"
                 disabled={!formIsValid}
                 loading={isLoading}
                 appearance={appearance}
+                rounded={true}
+                size={'m'}
               >
                 Отправить
-              </Button>
-          </FormField>
+            </Button>
           <Div className="answer">
               <Paragraph getRootRef={guessNameRef} className="guessed-name"></Paragraph>
           </Div>
