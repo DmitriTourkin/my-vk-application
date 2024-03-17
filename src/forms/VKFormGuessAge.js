@@ -63,7 +63,7 @@ const VKFormGuessAge= () => {
       }, 3000);
     }
     return () => clearTimeout(timer);
-  }, [name]);
+  }, [name, cachedResponses]);
 
   const handleInputChange = (e) => {
     guessNameRef.current.textContent = " ";
