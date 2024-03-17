@@ -12,4 +12,5 @@
 - vk-ui импортирован с помощью `npm i --save @vkontakte/vkui`
 - yup установлен с помощью команды `npm i yup`
 - Хук useForm установлен с помощью`npm install react-hook-form`
+
 ![Uploading Снимок экрана 2024-03-17 в 22.46.54.png…]()
