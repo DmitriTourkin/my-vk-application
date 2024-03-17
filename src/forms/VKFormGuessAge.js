@@ -132,7 +132,6 @@ const VKFormGuessAge= () => {
                 className="form-input"
                 name="name"
                 value={name} 
-                onError={errors.name?.message}
                 placeholder="Введите имя"
                 onChange={(e) => handleInputChange(e)}
               />
