@@ -17,6 +17,7 @@
 6. Если возникла ошибка `must provide string spec (npm ERR!)`, а версии NodeJS и NPM совместимы -- необходимо 
 7. **Переустановка зависимостей проекта**: удалить папку node_modules и файл package-lock.json, а затем установить зависимости заново:
    используя команду `rm -rf node_modules package-lock.json npm install`
+8. Введите в терминале команду `npm start`
 
 
 
