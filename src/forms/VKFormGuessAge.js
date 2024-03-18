@@ -22,7 +22,7 @@ const VKFormGuessAge= () => {
   const { register, 
     handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schema), mode: "all"
-    });
+  });
 
   const [name, setName] = useState("");
   const guessNameRef = useRef("");
@@ -31,7 +31,7 @@ const VKFormGuessAge= () => {
   const [nameIsValid, setNameIsValid] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
   const [appearance, setAppearance] = useState("accent");
-  const [isTyping, setTyping] = useState(false);
+  const [aborted, setAborted] = useState(false);
 
   let timer;
   let controller = new AbortController();
@@ -81,7 +81,6 @@ const VKFormGuessAge= () => {
 
   const handleFormButton = (inputInfo) => {
     settingLoading(true);
-
     if (!errors.name) {
       if (cachedResponses[name] === undefined) {
         guessAgeByName();
@@ -94,14 +93,15 @@ const VKFormGuessAge= () => {
   };
 
   async function abortFetching() {
-    console.log('Отмена fetch-запроса');
     controller.abort();
+    controller = new AbortController();
+    signal = controller.signal;
   };
  
   const guessAgeByName = async () => {
     const url = 'https://api.agify.io/?name=' + name;
     try {
-      const response = await fetch(url, { signal }, {method: "GET"});
+      const response = await fetch(url, { signal, method: "GET"});
       if (signal.aborted) { 
         return; 
       }
@@ -168,4 +168,3 @@ const VKFormGuessAge= () => {
 }
 
 export default VKFormGuessAge;
-
