@@ -14,7 +14,7 @@
 5. Попробуйте npm install
 6. Если возникла ошибка `must provide string spec (npm ERR!)`, а версии NodeJS и NPM совместимы — необходима:
 7. **Переустановка зависимостей проекта** — для этого нужно:
-   - удалить папку node_modules и файл package-lock.json, используя команду `rm -rf node_modules package-lock.json`. На Windows может возникнуть ошибка с символом -rf, для этого используйте другую команду `rm package-lock.json`. Файл package-lock.json удалится.
+   - удалить папку файл package-lock.json, используя команду `rm -rf node_modules package-lock.json` на MacOS. На Windows может возникнуть ошибка с символом -rf, для этого используйте другую команду `rm package-lock.json`. Файл package-lock.json удалится.
    - установить зависимости заново — введите `npm install` — начнётся переустановка зависимостей, будет создан новый package-lock.json проекта.
 8. Введите в терминале команду `npm start`
 
@@ -26,6 +26,7 @@
 
 Если вы открыли проект на Windows, у Вас может возникнуть ошибка `PORT не вялется внутренней или внешней командой`.
 - если такая ошибка возникла, нужно открыть файл `package.json` и оставить в scripts "start":"react-scripts start", без использования PORT.
+- сохранить изменённый файл
 - выполнить `rm package-lock.json`
 - снова ввести команду `npm install` для переустановки зависимостей. 
 
